@@ -25,9 +25,63 @@ const BottomTabNavigation = () => {
         tabBarActiveTintColor: theme.activeTintColor,
       }}
     >
-      <BottomNav.Screen name="Contacts" component={EmptyScreen} />
-      <BottomNav.Screen name="Story" component={EmptyScreen} />
-      <BottomNav.Screen name="Messages" component={EmptyScreen} />
+      <BottomNav.Screen
+        name="Contacts"
+        options={{
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: theme.color,
+          },
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="people-circle-sharp"
+              size={25}
+              color={focused ? theme.activeTintColor : theme.color}
+            />
+          ),
+        }}
+        component={EmptyScreen}
+      />
+      <BottomNav.Screen
+        name="Story"
+        options={{
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: theme.color,
+          },
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="radio-button-on-sharp"
+              size={25}
+              color={focused ? theme.activeTintColor : theme.color}
+            />
+          ),
+        }}
+        component={EmptyScreen}
+      />
+      <BottomNav.Screen
+        name="Messages"
+        options={{
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: theme.color,
+          },
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="chatbubbles-sharp"
+              size={25}
+              color={focused ? theme.activeTintColor : theme.color}
+            />
+          ),
+        }}
+        component={EmptyScreen}
+      />
       <BottomNav.Screen
         name="Settings"
         options={{
@@ -38,8 +92,12 @@ const BottomTabNavigation = () => {
           headerTitleStyle: {
             color: theme.color,
           },
-          tabBarIcon: () => (
-            <Ionicons name="settings-sharp" size={25} color={theme.color} />
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="settings-sharp"
+              size={25}
+              color={focused ? theme.activeTintColor : theme.color}
+            />
           ),
         }}
         component={SettingStackNavigation}

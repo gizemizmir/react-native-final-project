@@ -3,6 +3,6 @@ export default {
   accentColor: "#1DA1F2",
   backgroundColor: "white",
   color: "black",
-  activeTintColor: "#06B6D4",
+  activeTintColor: "#2385E1",
   grayText: "#AAB8C2",
 };
