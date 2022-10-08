@@ -5,23 +5,37 @@ import Icon from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 
 // Header is used to Messages and Chat Screen
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, type }) => {
   const { navigate } = useNavigation();
   return (
     <View>
       {!currentUser ? (
-        <View style={styles.defaultHeader}>
-          <View style={styles.topHeader}>
-            <Text style={styles.editText}>Edit</Text>
-            <Icon
-              onPress={() => navigate("NewMessage")}
-              name="edit"
-              size={20}
-              color="#2385E1"
-            />
+        type ? (
+          <View style={styles.defaultHeader}>
+            <View style={styles.topHeader}>
+              <Text style={styles.editText}>Edit</Text>
+              <Icon
+                onPress={() => navigate("NewMessage")}
+                name="edit"
+                size={20}
+                color="#2385E1"
+              />
+            </View>
+            <Text style={styles.title}>Chats</Text>
           </View>
-          <Text style={styles.title}>Chats</Text>
-        </View>
+        ) : (
+          <View style={styles.defaultHeader}>
+            <View style={styles.topHeader}>
+              <Text style={styles.editText}>Privacy</Text>
+              <Icon
+                name=""
+                size={20}
+                color="#2385E1"
+              />
+            </View>
+            <Text style={styles.title}>Story</Text>
+          </View>
+        )
       ) : (
         <View style={styles.chatHeader}>
           <View style={styles.leftHeader}>
