@@ -2,7 +2,7 @@
 
 EN - This project is the final project assignment within the scope of "Akbank React Native Bootcamp" organized by Patika.dev. 
 
-TR - Bu proje Patika.dev 'in düzenlediği "Akbank React Native Bootcamp" kapsamında yapılan Final Proje ödevidir. I
+TR - Bu proje Patika.dev 'in düzenlediği "Akbank React Native Bootcamp" kapsamında yapılan Final Proje ödevidir.
 <br/><br/>
 
 ## Technologies
