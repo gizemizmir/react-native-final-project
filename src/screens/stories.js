@@ -29,7 +29,7 @@ const Stories = () => {
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme.activeTheme);
-  const meData = useSelector((state) => state.auth.user);
+  const myData = useSelector((state) => state.auth.user);
   const stories = useSelector((state) => state.stories.storyItems);
   const [uploading, setUploading] = useState(false);
   const [myStories, setMyStories] = useState();
@@ -92,7 +92,7 @@ const Stories = () => {
 
   const addImageToStorage = async (uploadUrl) => {
     await addDoc(collection(db, `stories`), {
-      user: meData,
+      user: myData,
       photoURL: uploadUrl,
       timestamp: new Date().toLocaleDateString(),
     });
@@ -121,7 +121,7 @@ const Stories = () => {
 
   const getStories = async () => {
     onSnapshot(
-      query(collection(db, "stories"), where("user.id", "!=", meData.id)),
+      query(collection(db, "stories"), where("user.id", "!=", myData.id)),
       (snapshot) => {
         const _stories = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -134,7 +134,7 @@ const Stories = () => {
 
   const getMyStory = async () => {
     onSnapshot(
-      query(collection(db, "stories"), where("user.id", "==", meData.id)),
+      query(collection(db, "stories"), where("user.id", "==", myData.id)),
       (snapshot) => {
         const _myStories = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -174,7 +174,7 @@ const Stories = () => {
             <Image
               style={styles.userAvatar}
               source={{
-                uri: myStories?.[0]?.photoURL || meData.photoURL,
+                uri: myStories?.[0]?.photoURL || myData.photoURL,
               }}
             />
           </Pressable>

@@ -31,11 +31,11 @@ const Chat = ({ route }) => {
   const theme = useSelector((state) => state.theme.activeTheme);
   const { userID } = route.params;
   const contacts = useSelector((state) => state.contacts.contactItems);
-  const currentUser = contacts.find((item) => item.id === userID); // Receiver
-  const meData = useSelector((state) => state.auth.user); // Sender
+  const currentUser = contacts.find((item) => item.id === userID); // Receiver user
+  const myData = useSelector((state) => state.auth.user); // Sender user
   const { control, handleSubmit, resetField } = useForm();
   const [messageData, setMessageData] = useState([]);
-  const [chatID, setChatID] = useState(); // For updateDoc
+  const [chatID, setChatID] = useState(); // For updateDoc 
   const [uploading, setUploading] = useState(false);
   const receiverFullName = currentUser?.firstName + " " + currentUser?.lastName;
   const flatListRef = useRef();
@@ -46,16 +46,17 @@ const Chat = ({ route }) => {
     });
   });
 
+  // For text message add
   const addTextMsg = async (data) => {
     if (!messageData) {
       await addDoc(collection(db, `messages`), {
-        users: [meData?.id, currentUser?.id],
+        users: [myData?.id, currentUser?.id],
         messageItems: [
           {
             messageType: "text",
             text: data.messageInput,
             timestamp: new Date().toLocaleTimeString(),
-            sender: meData?.id,
+            sender: myData?.id,
             receiverName: receiverFullName,
             receiverPhoto: currentUser?.photoURL,
           },
@@ -71,7 +72,7 @@ const Chat = ({ route }) => {
           messageType: "text",
           text: data.messageInput,
           timestamp: new Date().toLocaleTimeString(),
-          sender: meData?.id,
+          sender: myData?.id,
           receiverName: receiverFullName,
           receiverPhoto: currentUser?.photoURL,
         }),
@@ -94,7 +95,7 @@ const Chat = ({ route }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        const test = _message?.find((item) => item.users.includes(meData?.id));
+        const test = _message?.find((item) => item.users.includes(myData?.id));
         setChatID(test?.id);
         setMessageData(test?.messageItems);
       }
@@ -117,17 +118,18 @@ const Chat = ({ route }) => {
     await addLocation(location.coords).finally(setUploading(false));
   };
 
+  // For location message add
   const addLocation = async (userLocation) => {
     if (!messageData) {
       await addDoc(collection(db, `messages`), {
-        users: [meData?.id, currentUser?.id],
+        users: [myData?.id, currentUser?.id],
         messageItems: [
           {
             messageType: "location",
             lat: userLocation?.latitude,
             long: userLocation?.longitude,
             timestamp: new Date().toLocaleString(),
-            sender: meData?.id,
+            sender: myData?.id,
             receiverName: receiverFullName,
             receiverPhoto: currentUser?.photoURL,
           },
@@ -142,7 +144,7 @@ const Chat = ({ route }) => {
           lat: userLocation?.latitude,
           long: userLocation?.longitude,
           timestamp: new Date().toLocaleString(),
-          sender: meData?.id,
+          sender: myData?.id,
           receiverName: receiverFullName,
           receiverPhoto: currentUser?.photoURL,
         }),
@@ -152,6 +154,7 @@ const Chat = ({ route }) => {
     getMessage();
   };
 
+  // Loading animation
   const maybeRenderUploadingOverlay = () => {
     if (uploading) {
       return (
@@ -170,10 +173,11 @@ const Chat = ({ route }) => {
       );
     }
   };
+
   const renderMessageItem = ({ item }) => (
     <MessageItem
       message={item}
-      status={item.sender === meData.id ? "sender" : "receiver"}
+      status={item.sender === myData.id ? "sender" : "receiver"}
       type={item.messageType}
     />
   );

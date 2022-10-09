@@ -4,6 +4,8 @@ import styles from "./ContactItem.style";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
+
+// contact item is used to list the chats on the NewMessage Screen
 const ContactItem = ({ contact }) => {
   const { navigate } = useNavigation();
   const navigation = useNavigation();

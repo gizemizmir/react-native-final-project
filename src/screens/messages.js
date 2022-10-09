@@ -18,12 +18,12 @@ const Messages = () => {
   const theme = useSelector((state) => state.theme.activeTheme);
   const messageData = useSelector((state) => state.chats.chatItems);
   const contacts = useSelector((state) => state.contacts.contactItems);
-  const meData = useSelector((state) => state.auth.user); // Sender
+  const myData = useSelector((state) => state.auth.user); // Sender
   const renderChat = ({ item }) => <ChatItem chat={item} />;
   const keyExtractorChat = (item) => item.id.toString();
 
   const getContacts = async () => {
-    const q = query(collection(db, "user"), where("id", "!=", meData.id));
+    const q = query(collection(db, "user"), where("id", "!=", myData.id));
     await getDocs(q).then((res) => {
       const _contacts = res.docs.map((item) => item.data());
       dispatch(setContacts({ contacts: _contacts }));
@@ -34,14 +34,14 @@ const Messages = () => {
     onSnapshot(
       query(
         collection(db, "messages"),
-        where("users", "array-contains", meData.id)
+        where("users", "array-contains", myData.id)
       ),
       (snapshot) => {
         const _message = snapshot.docs.map((doc) => ({
           id: doc.id,
           user: contacts?.find(
             (item) =>
-              item.id === doc.data().users.find((user) => user !== meData.id)
+              item.id === doc.data().users.find((user) => user !== myData.id)
           ),
           ...doc.data(),
         }));
