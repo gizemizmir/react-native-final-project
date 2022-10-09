@@ -1,4 +1,4 @@
-# React Native Image App
+# React Native Chat App - Final Project
 
 EN - This project is the final project assignment within the scope of "Akbank React Native Bootcamp" organized by Patika.dev. 
 
