@@ -8,10 +8,11 @@ import { auth } from "../utils/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NewMessageScreen from "../screens/newMessage";
-import Ionicons from '@expo/vector-icons/Ionicons';
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import ChatScreen from "../screens/chat";
 import LocationScreen from "../screens/location";
+import StoryDetail from "../screens/storyDetail";
 
 const MainStackNav = createStackNavigator();
 const MainStackNavigation = () => {
@@ -64,11 +65,21 @@ const MainStackNavigation = () => {
               presentation: "modal",
               headerShown: true,
               headerLeft: () => (
-                <Ionicons  onPress={ () => { navigation.goBack() } } name="ios-close-outline" size={35} color="#2385E1" />
+                <Ionicons
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  name="ios-close-outline"
+                  size={35}
+                  color="#2385E1"
+                />
               ),
-              title:"New Message",
+              title: "New Message",
               headerTitleStyle: {
                 color: theme.color,
+              },
+              headerStyle: {
+                backgroundColor: theme.backgroundColor,
               },
             }}
           />
@@ -79,15 +90,50 @@ const MainStackNavigation = () => {
               presentation: "modal",
               headerShown: true,
               headerLeft: () => (
-                <Ionicons  onPress={ () => { navigation.goBack() } } name="ios-close-outline" size={35} color="#2385E1" />
+                <Ionicons
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  name="ios-close-outline"
+                  size={35}
+                  color="#2385E1"
+                />
               ),
-              title:"Location Detail",
+              title: "Location Detail",
               headerTitleStyle: {
                 color: theme.color,
               },
+              headerStyle: {
+                backgroundColor: theme.backgroundColor,
+              },
             }}
           />
-           <MainStackNav.Screen
+          <MainStackNav.Screen
+            name="StoryDetail"
+            component={StoryDetail}
+            options={{
+              presentation: "modal",
+              headerShown: true,
+              headerLeft: () => (
+                <Ionicons
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  name="ios-close-outline"
+                  size={35}
+                  color="#2385E1"
+                />
+              ),
+              title: "Story Detail",
+              headerTitleStyle: {
+                color: theme.color,
+              },
+              headerStyle: {
+                backgroundColor: theme.backgroundColor,
+              },
+            }}
+          />
+          <MainStackNav.Screen
             name="Chat"
             component={ChatScreen}
             options={{
@@ -95,6 +141,9 @@ const MainStackNavigation = () => {
               headerBackTitleVisible: false,
               headerTitleStyle: {
                 color: theme.color,
+              },
+              headerStyle: {
+                backgroundColor: theme.backgroundColor,
               },
             }}
           />

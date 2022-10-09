@@ -1,24 +1,19 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SettingStackNavigation from "./settingStackNavigation";
 import { useSelector } from "react-redux";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-const EmptyScreen = () => {
-  return (
-    <View>
-      <Text>Bottom Empty Screen</Text>
-    </View>
-  );
-};
+import MessagesScreen from "../screens/messages";
+import Header from "../components/Header";
+import NewMessage from "../screens/newMessage";
+import StoriesScreen from "../screens/stories";
 
 const BottomNav = createBottomTabNavigator();
 const BottomTabNavigation = () => {
   const theme = useSelector((state) => state.theme.activeTheme);
   return (
     <BottomNav.Navigator
-      initialRouteName="Messages"
+      initialRouteName="Contacts"
       screenOptions={{
         tabBarStyle: { backgroundColor: theme.backgroundColor },
         tabBarInactiveTintColor: theme.color,
@@ -42,13 +37,14 @@ const BottomTabNavigation = () => {
             />
           ),
         }}
-        component={EmptyScreen}
+        component={NewMessage}
       />
       <BottomNav.Screen
-        name="Story"
+        name="Stories"
         options={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
+            height: 130,
           },
           headerTitleStyle: {
             color: theme.color,
@@ -61,17 +57,19 @@ const BottomTabNavigation = () => {
             />
           ),
         }}
-        component={EmptyScreen}
+        component={StoriesScreen}
       />
       <BottomNav.Screen
         name="Messages"
         options={{
           headerStyle: {
             backgroundColor: theme.backgroundColor,
+            height: 130,
           },
           headerTitleStyle: {
             color: theme.color,
           },
+          headerTitle: () => <Header type="chats" />,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="chatbubbles-sharp"
@@ -80,7 +78,7 @@ const BottomTabNavigation = () => {
             />
           ),
         }}
-        component={EmptyScreen}
+        component={MessagesScreen}
       />
       <BottomNav.Screen
         name="Settings"
