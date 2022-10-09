@@ -87,6 +87,10 @@ yarn start
             <td><img src="src/assets/chatdark.png" width="250" style="margin-right:30px;"/></td>
         </tr>
         <tr>
+            <td><img src="src/assets/location.png" width="250" style="margin-right:30px;"/></td>
+            <td><img src="src/assets/locationdark.png" width="250" style="margin-right:30px;"/></td>
+        </tr>
+        <tr>
             <td><img src="src/assets/newmessage.png" width="250" style="margin-right:30px;"/></td>
             <td><img src="src/assets/newmessagedark.png" width="250" style="margin-right:30px;"/></td>
         </tr>
