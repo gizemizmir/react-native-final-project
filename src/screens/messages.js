@@ -10,12 +10,13 @@ import {
 import { db } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { setContacts } from "../store/contactSlice";
+import { setChats } from "../store/chatSlice";
 import ChatItem from "../components/ChatItem";
 
 const Messages = () => {
   const dispatch = useDispatch();
-  const [messageData, setMessageData] = useState([]);
   const theme = useSelector((state) => state.theme.activeTheme);
+  const messageData = useSelector((state) => state.chats.chatItems);
   const contacts = useSelector((state) => state.contacts.contactItems);
   const meData = useSelector((state) => state.auth.user); // Sender
   const renderChat = ({ item }) => <ChatItem chat={item} />;
@@ -44,7 +45,8 @@ const Messages = () => {
           ),
           ...doc.data(),
         }));
-        setMessageData(_message);
+
+        dispatch(setChats({ chats: _message }));
       }
     );
   };

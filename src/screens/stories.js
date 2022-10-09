@@ -10,27 +10,28 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import {
   addDoc,
   collection,
-  Timestamp,
   query,
   where,
   onSnapshot,
 } from "firebase/firestore";
 import uuid from "react-native-uuid";
 import { db, storage } from "../utils/firebase";
+import { setStories } from "../store/storySlice";
 
 const Stories = () => {
   const navigation = useNavigation();
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme.activeTheme);
   const meData = useSelector((state) => state.auth.user);
+  const stories = useSelector((state) => state.stories.storyItems);
   const [uploading, setUploading] = useState(false);
-  const [stories, setStories] = useState([]);
   const [myStories, setMyStories] = useState();
 
   useEffect(() => {
@@ -126,7 +127,7 @@ const Stories = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setStories(_stories);
+        dispatch(setStories({ stories: _stories }));
       }
     );
   };
