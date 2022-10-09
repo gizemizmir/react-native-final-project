@@ -40,7 +40,7 @@ const Settings = () => {
         <Pressable
           style={styles.settingButton}
           onPress={() => {
-            navigate("ThemeSettingsScreen");
+            navigate("ThemeSetting");
           }}
         >
           <Text style={styles.buttonText}>Theme</Text>
