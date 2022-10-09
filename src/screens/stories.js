@@ -31,7 +31,7 @@ const Stories = () => {
   const meData = useSelector((state) => state.auth.user);
   const [uploading, setUploading] = useState(false);
   const [stories, setStories] = useState([]);
-  const [myStories, setMyStories] = useState([]);
+  const [myStories, setMyStories] = useState();
 
   useEffect(() => {
     navigation.setOptions({
@@ -93,7 +93,7 @@ const Stories = () => {
     await addDoc(collection(db, `stories`), {
       user: meData,
       photoURL: uploadUrl,
-      timestamp: Timestamp.now().toMillis(),
+      timestamp: new Date().toLocaleDateString(),
     });
     getStories();
     getMyStory();
@@ -156,46 +156,44 @@ const Stories = () => {
         { backgroundColor: theme.backgroundColor },
       ]}
     >
-      {myStories?.map((story, index) => {
-        return (
-          <View key={index} style={[styles.myStory]}>
-            <View
-              style={[
-                styles.storyContainer,
-                { backgroundColor: theme.backgroundSecondColor },
-              ]}
-            >
-              <Pressable
-                onPress={() => {
-                  navigate("StoryDetail", { image: story.photoURL });
-                }}
-              >
-                <Image
-                  style={styles.userAvatar}
-                  source={{
-                    uri: story.photoURL,
-                  }}
-                />
-              </Pressable>
-              <View style={styles.plusContainer}>
-                <Text style={styles.plusText}>+</Text>
-              </View>
-              <Text style={[styles.userName, { color: theme.color }]}>
-                {story.user?.firstName + " " + story.user?.lastName}
-              </Text>
-              <View style={styles.iconContainer}>
-                <Ionicons
-                  style={styles.icon}
-                  name="camera-sharp"
-                  size={25}
-                  color="#2385E1"
-                  onPress={() => pickImage()}
-                />
-              </View>
-            </View>
+      <View style={[styles.myStory]}>
+        <View
+          style={[
+            styles.storyContainer,
+            { backgroundColor: theme.backgroundSecondColor },
+          ]}
+        >
+          <Pressable
+            onPress={() => {
+              myStories?.[0]?.photoURL
+                ? navigate("StoryDetail", { image: myStories?.[0]?.photoURL })
+                : {};
+            }}
+          >
+            <Image
+              style={styles.userAvatar}
+              source={{
+                uri: myStories?.[0]?.photoURL || meData.photoURL,
+              }}
+            />
+          </Pressable>
+          <View style={styles.plusContainer}>
+            <Text style={styles.plusText}>+</Text>
           </View>
-        );
-      })}
+          <Text style={[styles.userName, { color: theme.color }]}>
+            My Story
+          </Text>
+          <View style={styles.iconContainer}>
+            <Ionicons
+              style={styles.icon}
+              name="camera-sharp"
+              size={25}
+              color="#2385E1"
+              onPress={() => pickImage()}
+            />
+          </View>
+        </View>
+      </View>
       <Text style={[styles.title, { color: theme.color }]}>Last Stories</Text>
       {stories?.map((story, index) => {
         return (
