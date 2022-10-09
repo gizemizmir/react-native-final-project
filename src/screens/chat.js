@@ -95,9 +95,9 @@ const Chat = ({ route }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        const test = _message?.find((item) => item.users.includes(myData?.id));
-        setChatID(test?.id);
-        setMessageData(test?.messageItems);
+        const conversation = _message?.find((item) => item.users.includes(myData?.id));
+        setChatID(conversation?.id);
+        setMessageData(conversation?.messageItems);
       }
     );
   };
